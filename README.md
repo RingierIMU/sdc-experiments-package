@@ -1,4 +1,4 @@
-# SDC Experiments Laravel Package 📈
+# SDC Experiments Laravel Package 🧪
 
 ## About The Project
 
