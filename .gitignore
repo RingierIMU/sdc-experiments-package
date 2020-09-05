@@ -1,0 +1,8 @@
+/*.lock
+/.phpunit.result.cache
+/vendor/
+
+# IDE: PHPStorm
+/.idea
+
+.env

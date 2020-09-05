@@ -1,0 +1,47 @@
+{
+  "name": "ringierimu/recommend",
+  "description": "SDC Recommend Package",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Richard Klugman",
+      "email": "tools@ringier.co.za"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "src/helpers.php"
+    ],
+    "psr-4": {
+      "Ringierimu\\Recommend\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Ringierimu\\Recommend\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Ringierimu\\Recommend\\RecommendServiceProvider"
+      ]
+    }
+  },
+  "require": {
+    "php": ">=7.2.0",
+    "ext-json": "*",
+    "laravel/framework": "^7.3|^6",
+    "laravel/helpers": "^1.0",
+    "guzzlehttp/guzzle": "^7.0"
+  },
+  "require-dev": {
+    "mockery/mockery": "^1.0",
+    "phpunit/phpunit": "^9.0",
+    "orchestra/testbench": "^5.3",
+    "php-http/message": "^1.4"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

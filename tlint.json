@@ -1,0 +1,9 @@
+{
+  "preset": "laravel",
+  "disabled": [
+    "SpaceAfterSoleNotOperator",
+    "NoParensEmptyInstantiations",
+    "OneLineBetweenClassVisibilityChanges",
+    "ModelMethodOrder"
+  ]
+}
