@@ -1,6 +1,6 @@
 <?php
 
-namespace Ringierimu\Recommend\Http\Middleware;
+namespace Ringierimu\Experiments\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -32,7 +32,7 @@ class SetExperiment
             ->flatMap(
                 function ($experimentKey) {
                     return [
-                        "experiment_{$experimentKey}" => $this->randomUserGroup(),
+                        "experiment_$experimentKey" => $this->randomUserGroup(),
                     ];
                 }
             )
@@ -50,7 +50,8 @@ class SetExperiment
                     $newExperiments,
                     $cookieExperiments
                 )
-            )
+            ),
+            2628000 // forever
         );
 
         return $next($request);
@@ -61,10 +62,12 @@ class SetExperiment
      */
     protected function getRunningExperiments(): array
     {
-        return array_keys(config(
-            'recommend.experiments',
-            []
-        ));
+        return array_keys(
+            config(
+                'experiments',
+                []
+            )
+        );
     }
 
     /**

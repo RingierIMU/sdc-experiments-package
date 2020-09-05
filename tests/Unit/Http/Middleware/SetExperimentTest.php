@@ -1,9 +1,9 @@
 <?php
 
-namespace Ringierimu\Recommend\Tests\Unit\Http\Middleware;
+namespace Ringierimu\Experiments\Tests\Unit\Http\Middleware;
 
-use Ringierimu\Recommend\Http\Middleware\SetExperiment;
-use Ringierimu\Recommend\Tests\TestCase;
+use Ringierimu\Experiments\Http\Middleware\SetExperiment;
+use Ringierimu\Experiments\Tests\TestCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Symfony\Component\HttpFoundation\Cookie as CookieObject;
@@ -26,7 +26,7 @@ class SetExperimentTest extends TestCase
             in_array(
                 $experiment->experiment_recommend,
                 array_keys(
-                    config('recommend.experiments.recommend')
+                    config('experiments.recommend')
                 )
             )
         );
@@ -36,7 +36,7 @@ class SetExperimentTest extends TestCase
     {
         config(
             [
-                'recommend.experiments' => [
+                'experiments' => [
                     'recommend' => [
                         'control' => 'personalize',
                         'test' => 'alice',
@@ -62,7 +62,7 @@ class SetExperimentTest extends TestCase
             in_array(
                 $experiment->experiment_recommend,
                 array_keys(
-                    config('recommend.experiments.recommend')
+                    config('experiments.recommend')
                 )
             )
         );
@@ -71,7 +71,7 @@ class SetExperimentTest extends TestCase
             in_array(
                 $experiment->experiment_recommend_2,
                 array_keys(
-                    config('recommend.experiments.recommend_2')
+                    config('experiments.recommend_2')
                 )
             )
         );

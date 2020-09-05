@@ -1,6 +1,6 @@
 <?php
 
-namespace Ringierimu\Recommend\Console;
+namespace Ringierimu\Experiments\Console;
 
 use Illuminate\Console\Command;
 
@@ -11,14 +11,14 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'recommend:install';
+    protected $signature = 'experiments:install';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Install the recommend package';
+    protected $description = 'Install the experiments package';
 
     /**
      * Execute the console command.
@@ -27,7 +27,7 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->comment('Publishing Recommend Service Provider...');
-        $this->call('vendor:publish', ['--provider' => 'Ringierimu\Recommend\RecommendServiceProvider']);
+        $this->comment('Publishing Experiments Service Provider...');
+        $this->call('vendor:publish', ['--provider' => 'Ringierimu\Experiments\ExperimentsServiceProvider']);
     }
 }

@@ -1,11 +1,11 @@
 {
-  "name": "ringierimu/recommend",
-  "description": "SDC Recommend Package",
+  "name": "ringierimu/experiments",
+  "description": "SDC Experiments Package 🧪",
   "license": "MIT",
   "type": "library",
   "authors": [
     {
-      "name": "Richard Klugman",
+      "name": "Gareth Edwards",
       "email": "tools@ringier.co.za"
     }
   ],
@@ -14,18 +14,18 @@
       "src/helpers.php"
     ],
     "psr-4": {
-      "Ringierimu\\Recommend\\": "src/"
+      "Ringierimu\\Experiments\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Ringierimu\\Recommend\\Tests\\": "tests/"
+      "Ringierimu\\Experiments\\Tests\\": "tests/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "Ringierimu\\Recommend\\RecommendServiceProvider"
+        "Ringierimu\\Experiments\\ExperimentsServiceProvider"
       ]
     }
   },
@@ -34,13 +34,12 @@
     "ext-json": "*",
     "laravel/framework": "^7.3|^6",
     "laravel/helpers": "^1.0",
-    "guzzlehttp/guzzle": "^7.0"
+    "spatie/laravel-googletagmanager": "^2.5"
   },
   "require-dev": {
     "mockery/mockery": "^1.0",
     "phpunit/phpunit": "^9.0",
-    "orchestra/testbench": "^5.3",
-    "php-http/message": "^1.4"
+    "orchestra/testbench": "^5.3"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

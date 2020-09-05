@@ -1,28 +1,52 @@
 <?php
 
-namespace Ringierimu\Recommend\Tests;
+namespace Ringierimu\Experiments\Tests;
 
-use GuzzleHttp\Client as GuzzleClient;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Ringierimu\Recommend\Tests\Mocks\GuzzleClient as MockGuzzleClient;
+use Spatie\GoogleTagManager\GoogleTagManagerFacade;
+use Spatie\GoogleTagManager\GoogleTagManagerServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        app()->bind(GuzzleClient::class, MockGuzzleClient::class);
-    }
-
+    /**
+     * @param $app
+     */
     protected function getEnvironmentSetUp($app)
     {
         $app->setBasePath(__DIR__ . '/..');
         config(
             [
-                'recommend' => require __DIR__ . '/../config/recommend.php',
+                'experiments' => [
+                    'recommend' => [
+                        'control' => 'personalize',
+                        'test' => 'alice',
+                    ],
+                ]
             ]
         );
+    }
+
+    /**
+     * @param $app
+     *
+     * @return string[]
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            GoogleTagManagerServiceProvider::class,
+        ];
+    }
+
+    /**
+     * @param $app
+     *
+     * @return string[]
+     */
+    protected function getPackageAliases($app)
+    {
+        return [
+            "GoogleTagManager" => GoogleTagManagerFacade::class,
+        ];
     }
 }

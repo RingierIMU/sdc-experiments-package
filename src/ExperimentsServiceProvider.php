@@ -1,10 +1,10 @@
 <?php
 
-namespace Ringierimu\Recommend;
+namespace Ringierimu\Experiments;
 
 use Illuminate\Support\ServiceProvider;
 
-class RecommendServiceProvider extends ServiceProvider
+class ExperimentsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
@@ -13,7 +13,7 @@ class RecommendServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom($this->configPath(), 'recommend');
+        $this->mergeConfigFrom($this->configPath(), 'experiments');
         $this->commands(
             [
                 Console\InstallCommand::class,
