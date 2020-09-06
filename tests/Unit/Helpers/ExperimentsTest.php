@@ -37,7 +37,7 @@ class ExperimentsTest extends TestCase
             );
     }
 
-    public function track_experiments()
+    public function testTrackExperiments()
     {
         $experiments = [
             'experiment-1' => 'test',
@@ -46,7 +46,7 @@ class ExperimentsTest extends TestCase
         $_COOKIE['experiments'] = json_encode($experiments);
 
         GoogleTagManager::shouldReceive('set')
-            ->with('mooo');
+            ->with('sdc_experiment-1', 'test');
 
         track_experiments();
     }
