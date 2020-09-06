@@ -14,4 +14,4 @@ jobs:
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
     - name: Run Tests
-      run: phpunit
+      run: phpunit --coverage-text
