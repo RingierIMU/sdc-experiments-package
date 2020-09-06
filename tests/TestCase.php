@@ -21,7 +21,7 @@ abstract class TestCase extends BaseTestCase
                         'control' => 'personalize',
                         'test' => 'alice',
                     ],
-                ]
+                ],
             ]
         );
     }

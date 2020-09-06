@@ -1,7 +1,5 @@
 <?php
 
-use GoogleTagManager;
-
 if (!function_exists('experiment_group')) {
     /**
      * Return what user group the current

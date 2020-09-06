@@ -32,7 +32,7 @@ class SetExperiment
             ->flatMap(
                 function ($experimentKey) {
                     return [
-                        "experiment_$experimentKey" => $this->randomUserGroup(),
+                        "experiment_{$experimentKey}" => $this->randomUserGroup(),
                     ];
                 }
             )
