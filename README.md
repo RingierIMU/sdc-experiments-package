@@ -30,7 +30,7 @@ php artisan experiments:install
 ```
 This will import the `config/experiments.php` file into your application
 
-Update your config `config/experiments.php` to include your running experiments. For example, for a `recommend` experiment your config will like this
+Update your config `config/experiments.php` to include your running experiments. For example, for a `recommend` experiment your config will look like this
 ```php
 <?php
 
