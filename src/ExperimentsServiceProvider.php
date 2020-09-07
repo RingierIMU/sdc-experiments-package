@@ -13,7 +13,6 @@ class ExperimentsServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom($this->configPath(), 'experiments');
         $this->commands(
             [
                 Console\InstallCommand::class,
