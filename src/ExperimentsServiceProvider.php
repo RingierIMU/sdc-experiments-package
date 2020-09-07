@@ -28,7 +28,7 @@ class ExperimentsServiceProvider extends ServiceProvider
      */
     protected function configPath()
     {
-        return __DIR__ . '/../config/recommend.php';
+        return __DIR__ . '/../config/experiments.php';
     }
 
     /**
@@ -39,9 +39,9 @@ class ExperimentsServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes(
                 [
-                    $this->configPath() => config_path('recommend.php'),
+                    $this->configPath() => config_path('experiments.php'),
                 ],
-                'recommend-config'
+                'experiments-config'
             );
         }
     }
