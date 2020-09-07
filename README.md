@@ -8,17 +8,7 @@ A Laravel package to determine a user's experiment group and track that user's g
 - Laravel 7+
 
 ### Installation
-Add the following snippet to your project's `composer.json` file in the `repositories` node (this is in order to use the private repo as a composer package)
-
-```json
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "git@github.com:RingierIMU/sdc-experiments-package.git"
-    }
-]
-```
-Then run the following in your project route:
+Run the following in your project route:
 ```php
 composer require ringierimu/experiments
 ```
