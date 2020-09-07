@@ -30,7 +30,18 @@ php artisan experiments:install
 ```
 This will import the `config/experiments.php` file into your application
 
-Update your config `config/experiments.php` to include your running experiments.
+Update your config `config/experiments.php` to include your running experiments. For example, for a `recommend` experiment your config will like this
+```php
+<?php
+
+return [
+    'recommend' => [
+        'control' => 'personalize',
+        'test' => 'alice',
+    ],
+];
+```
+
 ## Usage
 ### Add the middleware
 Add this to your `web` Http Kernel middleware groups.
@@ -46,7 +57,7 @@ This will ensure the user's cookie has the correct experiment groups set.
 when running an experiment, you need to present the user with a particular experience. To check whether the user is in `test` or `control`cohorts use the helper `experiment_group` 
 ```php
 if (experiment_group('my-experiment') == 'control') {
-    // the test experience
+    // the control experience
 } else {
     // the test experience
 }
