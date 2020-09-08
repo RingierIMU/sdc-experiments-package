@@ -1,5 +1,5 @@
 # SDC Experiments Laravel Package 🧪
-
+![Tests](https://github.com/RingierIMU/sdc-experiments-package/workflows/Tests/badge.svg) ![Lint Code Base](https://github.com/RingierIMU/sdc-experiments-package/workflows/Lint%20Code%20Base/badge.svg)
 ## About The Project
 
 A Laravel package to determine a user's experiment group and track that user's group in Google Tag Manager
@@ -30,6 +30,13 @@ return [
         'test' => 'alice',
     ],
 ];
+```
+
+The array keys are your running experiments, the array value is the `varaints` (optional). If you want to map a particular user group to a key. In the case of a recommendation engine, you can map user group to engine variant. If you don't need variants, you can just leava blank array 
+```php
+return [
+    'recommend' => [],
+]
 ```
 
 ## Usage
