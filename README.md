@@ -32,7 +32,7 @@ return [
 ];
 ```
 
-The array keys are your running experiments, the array value is the `varaints` (optional). If you want to map a particular user group to a key. In the case of a recommendation engine, you can map user group to engine variant. If you don't need variants, you can just leava blank array 
+The array keys are your running experiments, the array value is the `varaints` (optional). If you want to map a particular user group to a key. In the case of a recommendation engine, you can map user groups to engine variants. If you don't need variants, you can just leave a blank array 
 ```php
 return [
     'recommend' => [],
