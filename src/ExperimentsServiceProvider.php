@@ -25,14 +25,6 @@ class ExperimentsServiceProvider extends ServiceProvider
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function register()
-    {
-        //
-    }
-
-    /**
      * Return config file.
      *
      * @return string
