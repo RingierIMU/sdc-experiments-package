@@ -8,16 +8,20 @@ class ExperimentsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->publishConfig();
-    }
-
-    public function register()
-    {
-        $this->commands(
+        $this->publishes(
             [
-                Console\InstallCommand::class,
-            ]
+                $this->configPath() => config_path('experiments.php'),
+            ],
+            'config'
         );
+
+        if ($this->app->runningInConsole()) {
+            $this->commands(
+                [
+                    Console\InstallCommand::class,
+                ]
+            );
+        }
     }
 
     /**
@@ -28,20 +32,5 @@ class ExperimentsServiceProvider extends ServiceProvider
     protected function configPath()
     {
         return __DIR__ . '/../config/experiments.php';
-    }
-
-    /**
-     * Publish config file.
-     */
-    protected function publishConfig()
-    {
-        if ($this->app->runningInConsole()) {
-            $this->publishes(
-                [
-                    $this->configPath() => config_path('experiments.php'),
-                ],
-                'experiments-config'
-            );
-        }
     }
 }
