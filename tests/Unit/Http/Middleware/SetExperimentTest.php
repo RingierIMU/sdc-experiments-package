@@ -2,10 +2,11 @@
 
 namespace Ringierimu\Experiments\Tests\Unit\Http\Middleware;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cookie;
 use Ringierimu\Experiments\Http\Middleware\SetExperiment;
 use Ringierimu\Experiments\Tests\TestCase;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 use Symfony\Component\HttpFoundation\Cookie as CookieObject;
 
 class SetExperimentTest extends TestCase
@@ -17,7 +18,8 @@ class SetExperimentTest extends TestCase
         resolve(SetExperiment::class)
             ->handle(
                 $request,
-                function (){}
+                function () {
+                }
             );
 
         $experiment = $this->getExperiment();
@@ -53,7 +55,8 @@ class SetExperimentTest extends TestCase
         resolve(SetExperiment::class)
             ->handle(
                 $request,
-                function (){}
+                function () {
+                }
             );
 
         $experiment = $this->getExperiment();
@@ -86,7 +89,8 @@ class SetExperimentTest extends TestCase
         resolve(SetExperiment::class)
             ->handle(
                 $request,
-                function (){}
+                function () {
+                }
             );
 
         $experiment = $this->getExperiment();
@@ -120,7 +124,8 @@ class SetExperimentTest extends TestCase
         resolve(SetExperiment::class)
             ->handle(
                 $request,
-                function (){}
+                function () {
+                }
             );
 
         $experiment = $this->getExperiment();
@@ -155,7 +160,8 @@ class SetExperimentTest extends TestCase
         resolve(SetExperiment::class)
             ->handle(
                 $request,
-                function (){}
+                function () {
+                }
             );
 
         $experiment = $this->getExperiment();
@@ -176,7 +182,7 @@ class SetExperimentTest extends TestCase
     protected function getExperiment()
     {
         /** @var CookieObject $cookie */
-        $cookie = array_first(Cookie::getQueuedCookies('experiments'));
+        $cookie = Arr::first(Cookie::getQueuedCookies('experiments'));
 
         return json_decode($cookie->getValue());
     }

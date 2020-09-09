@@ -5,6 +5,7 @@ namespace Ringierimu\Experiments\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Collection;
 
 class SetExperiment
 {
@@ -23,7 +24,7 @@ class SetExperiment
 
         // only set new experiment user groups for
         // experiments not in the cookie already
-        $newExperiments = collect($this->getRunningExperiments())
+        $newExperiments = Collection::make($this->getRunningExperiments())
             ->filter(
                 function ($experimentKey) use ($cookieExperiments) {
                     return !in_array($experimentKey, $cookieExperiments);

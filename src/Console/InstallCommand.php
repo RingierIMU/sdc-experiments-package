@@ -28,6 +28,9 @@ class InstallCommand extends Command
     public function handle()
     {
         $this->comment('Publishing Experiments Service Provider...');
-        $this->call('vendor:publish', ['--provider' => 'Ringierimu\Experiments\ExperimentsServiceProvider']);
+        $this->call(
+            'vendor:publish',
+            ['--provider' => 'Ringierimu\Experiments\ExperimentsServiceProvider']
+        );
     }
 }

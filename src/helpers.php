@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Spatie\GoogleTagManager\GoogleTagManager;
+
 if (!function_exists('experiment_group')) {
     /**
      * Return what user group the current
@@ -14,8 +18,8 @@ if (!function_exists('experiment_group')) {
         string $experimentName
     ): ?string {
         $experiments = $_COOKIE['experiments'] ?? '';
-        $experiment = array_get(
-            (array)json_decode($experiments),
+        $experiment = Arr::get(
+            (array) json_decode($experiments),
             $experimentName
         );
 
@@ -50,7 +54,7 @@ if (!function_exists('track_experiments')) {
             return;
         }
 
-        collect((array) json_decode($experiments))
+        Collection::make((array) json_decode($experiments))
             ->each(
                 function ($value, $key) {
                     GoogleTagManager::set('sdc_' . $key, $value);
