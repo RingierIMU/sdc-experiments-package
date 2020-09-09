@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Spatie\GoogleTagManager\GoogleTagManager;
+use Spatie\GoogleTagManager\GoogleTagManagerFacade;
 
 if (!function_exists('experiment_group')) {
     /**
@@ -57,7 +57,7 @@ if (!function_exists('track_experiments')) {
         Collection::make((array) json_decode($experiments))
             ->each(
                 function ($value, $key) {
-                    GoogleTagManager::set('sdc_' . $key, $value);
+                    GoogleTagManagerFacade::set('sdc_' . $key, $value);
                 }
             );
     }

@@ -24,12 +24,12 @@ class ExperimentsServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function register()
     {
-        $this->mergeConfigFrom(
-            $this->configPath(),
-            'experiments'
-        );
+        //
     }
 
     /**
