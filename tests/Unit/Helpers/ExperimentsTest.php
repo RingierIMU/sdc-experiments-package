@@ -57,7 +57,6 @@ class ExperimentsTest extends TestCase
             ],
             $dataLayer->toArray()
         );
-
     }
 
     public function testGetRunningExperiments()
@@ -72,7 +71,6 @@ class ExperimentsTest extends TestCase
                 'experiments' => [],
             ]
         );
-
 
         $this->assertEquals(
             [],
