@@ -4,6 +4,7 @@ namespace Horizon\Experiments\Unit\Helpers;
 
 use Ringierimu\Experiments\Tests\TestCase;
 use GoogleTagManager;
+use Spatie\GoogleTagManager\DataLayer;
 
 class ExperimentsTest extends TestCase
 {
@@ -40,14 +41,42 @@ class ExperimentsTest extends TestCase
     public function testTrackExperiments()
     {
         $experiments = [
-            'experiment-1' => 'test',
+            'recommend' => 'test',
         ];
 
         $_COOKIE['experiments'] = json_encode($experiments);
 
-        GoogleTagManager::shouldReceive('set')
-            ->with('sdc_experiment-1', 'test');
-
         track_experiments();
+
+        /** @var DataLayer $dataLayer */
+        $dataLayer = GoogleTagManager::getDataLayer();
+
+        $this->assertEquals(
+            [
+                'sdc_recommend' => 'test',
+            ],
+            $dataLayer->toArray()
+        );
+
+    }
+
+    public function testGetRunningExperiments()
+    {
+        $this->assertEquals(
+            ['recommend'],
+            get_running_experiments()
+        );
+
+        config(
+            [
+                'experiments' => [],
+            ]
+        );
+
+
+        $this->assertEquals(
+            [],
+            get_running_experiments()
+        );
     }
 }
