@@ -24,7 +24,7 @@ class SetExperiment
 
         // only set new experiment user groups for
         // experiments not in the cookie already
-        $newExperiments = Collection::make($this->getRunningExperiments())
+        $newExperiments = Collection::make(get_running_experiments())
             ->filter(
                 function ($experimentKey) use ($cookieExperiments) {
                     return !in_array($experimentKey, $cookieExperiments);
@@ -56,19 +56,6 @@ class SetExperiment
         );
 
         return $next($request);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getRunningExperiments(): array
-    {
-        return array_keys(
-            config(
-                'experiments',
-                []
-            )
-        );
     }
 
     /**

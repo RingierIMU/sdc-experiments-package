@@ -4,6 +4,7 @@
     "SpaceAfterSoleNotOperator",
     "NoParensEmptyInstantiations",
     "OneLineBetweenClassVisibilityChanges",
-    "ModelMethodOrder"
+    "ModelMethodOrder",
+    "ConcatenationNoSpacing"
   ]
 }

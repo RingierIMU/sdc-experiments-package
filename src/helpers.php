@@ -54,11 +54,36 @@ if (!function_exists('track_experiments')) {
             return;
         }
 
+        $runningExperiments = get_running_experiments();
+
         Collection::make((array) json_decode($experiments))
+            ->filter(
+                function ($value, $key) use ($runningExperiments) {
+                    return in_array(
+                        $key,
+                        $runningExperiments
+                    );
+                }
+            )
             ->each(
                 function ($value, $key) {
                     GoogleTagManagerFacade::set('sdc_' . $key, $value);
                 }
             );
+    }
+}
+
+if (!function_exists('get_running_experiments')) {
+    /**
+     * Get all running sdc experiments
+     */
+    function get_running_experiments(): array
+    {
+        return array_keys(
+            config(
+                'experiments',
+                []
+            )
+        );
     }
 }
