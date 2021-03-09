@@ -1,9 +1,9 @@
 <?php
 
-namespace Horizon\Experiments\Unit\Helpers;
+namespace Ringierimu\Experiments\Tests\Unit\Helpers;
 
-use Ringierimu\Experiments\Tests\TestCase;
 use GoogleTagManager;
+use Ringierimu\Experiments\Tests\TestCase;
 use Spatie\GoogleTagManager\DataLayer;
 
 class ExperimentsTest extends TestCase
