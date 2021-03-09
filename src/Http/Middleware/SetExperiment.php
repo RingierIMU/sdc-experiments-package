@@ -4,8 +4,8 @@ namespace Ringierimu\Experiments\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cookie;
 
 class SetExperiment
 {
