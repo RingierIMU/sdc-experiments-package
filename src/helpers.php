@@ -31,6 +31,10 @@ if (!function_exists('experiment_group')) {
             return 'test';
         }
 
+        if (mb_strstr($experiment, 'internal')) {
+            return 'internal';
+        }
+
         return 'control';
     }
 }
