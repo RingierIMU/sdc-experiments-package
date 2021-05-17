@@ -64,7 +64,7 @@ if (!function_exists('track_experiments')) {
             ->filter(
                 function ($value, $key) use ($runningExperiments) {
                     return in_array(
-                        $key,
+                        ltrim($key, 'experiment_'),
                         $runningExperiments
                     );
                 }
