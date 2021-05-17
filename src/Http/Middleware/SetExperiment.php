@@ -18,8 +18,10 @@ class SetExperiment
      */
     public function handle($request, Closure $next)
     {
-        SdcExperiments::queueRequestCookie();
+        $response = $next($request);
 
-        return $next($request);
+        $response->headers->setCookie(SdcExperiments::getRequestCookie());
+
+        return $response;
     }
 }
