@@ -2,7 +2,6 @@
 
 namespace Ringierimu\Experiments;
 
-use Illuminate\Contracts\Cookie\Factory;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
@@ -158,10 +157,7 @@ class Experiments
         $this->userExperiments[$experiment] = $assignment;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Cookie
-     */
-    public function getRequestCookie()
+    public function queueRequestCookie()
     {
         $data = Collection::make($this->userExperiments())
             ->flatMap(
@@ -171,12 +167,11 @@ class Experiments
             )
             ->all();
 
-        return app(Factory::class)
-            ->make(
-                'experiments',
-                json_encode($data),
-                2628000 // forever
-            );
+        Cookie::queue(
+            'experiments',
+            json_encode($data),
+            2628000 // forever
+        );
     }
 
     public function googleTagManagerSetTrackingVars()

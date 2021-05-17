@@ -20,7 +20,7 @@ class SetExperiment
     {
         $response = $next($request);
 
-        $response->headers->setCookie(SdcExperiments::getRequestCookie());
+        SdcExperiments::queueRequestCookie();
 
         return $response;
     }
