@@ -5,6 +5,7 @@ namespace Ringierimu\Experiments\Tests\Unit\Http\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cookie;
+use Ringierimu\Experiments\Facades\SdcExperiments;
 use Ringierimu\Experiments\Http\Middleware\SetExperiment;
 use Ringierimu\Experiments\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Cookie as CookieObject;
@@ -14,6 +15,8 @@ class SetExperimentTest extends TestCase
     public function testSuccess()
     {
         $request = new Request();
+
+        $this->setExperiments();
 
         resolve(SetExperiment::class)
             ->handle(
@@ -26,7 +29,7 @@ class SetExperimentTest extends TestCase
 
         $this->assertTrue(
             in_array(
-                $experiment->experiment_recommend,
+                $experiment['experiment_recommend'],
                 array_keys(
                     config('experiments.recommend')
                 )
@@ -52,6 +55,8 @@ class SetExperimentTest extends TestCase
         );
         $request = new Request();
 
+        $this->setExperiments();
+
         resolve(SetExperiment::class)
             ->handle(
                 $request,
@@ -63,7 +68,7 @@ class SetExperimentTest extends TestCase
 
         $this->assertTrue(
             in_array(
-                $experiment->experiment_recommend,
+                $experiment['experiment_recommend'],
                 array_keys(
                     config('experiments.recommend')
                 )
@@ -72,7 +77,7 @@ class SetExperimentTest extends TestCase
 
         $this->assertTrue(
             in_array(
-                $experiment->experiment_recommend_2,
+                $experiment['experiment_recommend_2'],
                 array_keys(
                     config('experiments.recommend_2')
                 )
@@ -86,6 +91,8 @@ class SetExperimentTest extends TestCase
         // this ensures control always get chosen
         mt_srand(0);
 
+        $this->setExperiments();
+
         resolve(SetExperiment::class)
             ->handle(
                 $request,
@@ -98,7 +105,7 @@ class SetExperimentTest extends TestCase
         $this
             ->assertEquals(
                 'control',
-                $experiment->experiment_recommend
+                $experiment['experiment_recommend']
             );
     }
 
@@ -108,22 +115,24 @@ class SetExperimentTest extends TestCase
      */
     public function testPresetExperiment()
     {
-        $request = new Request();
         // this ensures control always get chosen
         mt_srand(0);
 
-        $request
+        $this
+            ->app['request']
             ->cookies
             ->set(
                 'experiments',
-                json_encode([
-                    'experiment_recommend' => 'test',
-                ])
+                json_encode(
+                    [
+                        'experiment_recommend' => 'test',
+                    ]
+                )
             );
 
         resolve(SetExperiment::class)
             ->handle(
-                $request,
+                new Request(),
                 function () {
                 }
             );
@@ -133,7 +142,7 @@ class SetExperimentTest extends TestCase
         $this
             ->assertEquals(
                 'test',
-                $experiment->experiment_recommend
+                $experiment['experiment_recommend']
             );
     }
 
@@ -143,40 +152,48 @@ class SetExperimentTest extends TestCase
      */
     public function testPresetExperiments()
     {
-        $request = new Request();
+        config(['experiments.recommend_2' => []]);
+
         // this ensures control always get chosen
         mt_srand(0);
 
-        $request
+        $this
+            ->app['request']
             ->cookies
             ->set(
                 'experiments',
-                json_encode([
-                    'experiment_recommend' => 'test',
-                    'experiment_recommend_2' => 'test',
-                ])
+                json_encode(
+                    [
+                        'experiment_recommend' => 'test',
+                        'experiment_recommend_2' => 'test',
+                        'experiment_recommend_3' => 'test',
+                    ]
+                )
             );
 
         resolve(SetExperiment::class)
             ->handle(
-                $request,
+                new Request(),
                 function () {
                 }
             );
 
-        $experiment = $this->getExperiment();
-
         $this
             ->assertEquals(
-                'test',
-                $experiment->experiment_recommend
+                [
+                    'experiment_recommend' => 'test',
+                    'experiment_recommend_2' => 'test',
+                    // recommend_3 should not appear, the exclusion is on purpose
+                    //'experiment_recommend_3' => 'test',
+                ],
+                $this->getExperiment()
             );
+    }
 
-        $this
-            ->assertEquals(
-                'test',
-                $experiment->experiment_recommend_2
-            );
+    protected function setExperiments() {
+        foreach (array_keys(config('experiments')) as $experiment) {
+            SdcExperiments::getOrStartExperiment($experiment);
+        }
     }
 
     protected function getExperiment()
@@ -184,6 +201,9 @@ class SetExperimentTest extends TestCase
         /** @var CookieObject $cookie */
         $cookie = Arr::first(Cookie::getQueuedCookies('experiments'));
 
-        return json_decode($cookie->getValue());
+        return json_decode(
+            $cookie->getValue(),
+            true
+        );
     }
 }

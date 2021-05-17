@@ -2,60 +2,25 @@
 
 namespace Ringierimu\Experiments\Tests\Unit\Helpers;
 
-use GoogleTagManager;
+use Ringierimu\Experiments\Facades\SdcExperiments;
 use Ringierimu\Experiments\Tests\TestCase;
-use Spatie\GoogleTagManager\DataLayer;
+use Spatie\GoogleTagManager\GoogleTagManagerFacade as GoogleTagManager;
 
 class ExperimentsTest extends TestCase
 {
-    public function testExperimentGroup()
-    {
-        $experiments = [
-            'experiment-1' => 'test',
-        ];
-
-        $this
-            ->assertNull(experiment_group('experiment-1'));
-
-        $_COOKIE['experiments'] = json_encode($experiments);
-
-        $this
-            ->assertEquals(
-                'test',
-                experiment_group('experiment-1')
-            );
-
-        $experiments = [
-            'experiment-1' => 'control',
-        ];
-
-        $_COOKIE['experiments'] = json_encode($experiments);
-
-        $this
-            ->assertEquals(
-                'control',
-                experiment_group('experiment-1')
-            );
-    }
-
     public function testTrackExperiments()
     {
-        $experiments = [
-            'recommend' => 'test',
-        ];
+        $assignment = SdcExperiments::getOrStartExperiment('recommend');
 
-        $_COOKIE['experiments'] = json_encode($experiments);
-
-        track_experiments();
-
-        /** @var DataLayer $dataLayer */
-        $dataLayer = GoogleTagManager::getDataLayer();
+        SdcExperiments::googleTagManagerSetTrackingVars();
 
         $this->assertEquals(
             [
-                'sdc_recommend' => 'test',
+                'experiments' => [
+                    'recommend' => $assignment,
+                ],
             ],
-            $dataLayer->toArray()
+            GoogleTagManager::getDataLayer()->toArray()
         );
     }
 
@@ -63,7 +28,7 @@ class ExperimentsTest extends TestCase
     {
         $this->assertEquals(
             ['recommend'],
-            get_running_experiments()
+            SdcExperiments::availableExperiments()
         );
 
         config(
@@ -74,7 +39,51 @@ class ExperimentsTest extends TestCase
 
         $this->assertEquals(
             [],
-            get_running_experiments()
+            SdcExperiments::availableExperiments()
         );
+    }
+
+    public function testExperimentGroup()
+    {
+        $this
+            ->assertNull(
+                SdcExperiments::getExperiment('experiment-1')
+            );
+
+        $assignment = SdcExperiments::getOrStartExperiment('experiment-1');
+
+        $this
+            ->assertNull($assignment);
+
+        config(
+            [
+                'experiments' => [
+                    'experiment-1' => [],
+                    'experiment-2' => [],
+                ],
+            ]
+        );
+
+        $assignment = SdcExperiments::getOrStartExperiment('experiment-1');
+
+        $this
+            ->assertNotNull($assignment);
+
+        $this
+            ->assertEquals(
+                $assignment,
+                SdcExperiments::getExperiment('experiment-1')
+            );
+
+        $assignment = SdcExperiments::getOrStartExperiment('experiment-2');
+
+        $this
+            ->assertNotEmpty($assignment);
+
+        $this
+            ->assertEquals(
+                $assignment,
+                SdcExperiments::getExperiment('experiment-2')
+            );
     }
 }
