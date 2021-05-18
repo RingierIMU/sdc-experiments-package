@@ -26,7 +26,10 @@
     "laravel": {
       "providers": [
         "Ringierimu\\Experiments\\ExperimentsServiceProvider"
-      ]
+      ],
+      "aliases": {
+        "SdcExperiments": "Ringierimu\\Experiments\\Facades\\SdcExperiments"
+      }
     }
   },
   "require": {

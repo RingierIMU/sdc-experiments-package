@@ -32,7 +32,7 @@ return [
 ];
 ```
 
-The array keys are your running experiments, the array value is the `varaints` (optional). If you want to map a particular user group to a key. In the case of a recommendation engine, you can map user groups to engine variants. If you don't need variants, you can just leave a blank array 
+The array keys are your running experiments, the array value is the `varaints` (optional). If you want to map a particular user group to a key. In the case of a recommendation engine, you can map user groups to engine variants. If you don't need variants, you can just leave a blank array
 ```php
 return [
     'recommend' => [],
@@ -51,12 +51,12 @@ Add this to your `web` Http Kernel middleware groups.
 This will ensure the user's cookie has the correct experiment groups set.
 
 ### Check experiment group
-when running an experiment, you need to present the user with a particular experience. To check whether the user is in `test` or `control`cohorts use the helper `experiment_group` 
+when running an experiment, you need to present the user with a particular experience. To check whether the user is in `test` or `control`cohorts use the helper `SdcExperiments::getOrStartExperiment`
 ```php
-if (experiment_group('my-experiment') == 'control') {
-    // the control experience
-} else {
+if (SdcExperiments::getOrStartExperiment('my-experiment') == 'test') {
     // the test experience
+} else {
+    // the control experience OR the experiment is not running
 }
 ```
 
@@ -64,6 +64,6 @@ if (experiment_group('my-experiment') == 'control') {
 In your tracking datalayer you need to send through an extra dimension that represents the user's experiment groups.
 To do this use the `track_experiments` helper.
 ```php
-track_experiments();
+SdcExperiments::googleTagManagerSetTrackingVars();
 ```
 This will send through experiment data to GTM for reporting.

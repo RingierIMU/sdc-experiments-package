@@ -3,6 +3,8 @@
 namespace Ringierimu\Experiments\Tests;
 
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use Ringierimu\Experiments\ExperimentsServiceProvider;
+use Ringierimu\Experiments\Facades\SdcExperiments;
 use Spatie\GoogleTagManager\GoogleTagManagerFacade;
 use Spatie\GoogleTagManager\GoogleTagManagerServiceProvider;
 
@@ -34,6 +36,7 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
+            ExperimentsServiceProvider::class,
             GoogleTagManagerServiceProvider::class,
         ];
     }
@@ -46,7 +49,8 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageAliases($app)
     {
         return [
-            "GoogleTagManager" => GoogleTagManagerFacade::class,
+            'GoogleTagManager' => GoogleTagManagerFacade::class,
+            'SdcExperiments' => SdcExperiments::class,
         ];
     }
 }
