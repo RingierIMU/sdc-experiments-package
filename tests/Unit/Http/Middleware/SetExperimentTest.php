@@ -31,7 +31,7 @@ class SetExperimentTest extends TestCase
             in_array(
                 $experiment['experiment_recommend'],
                 array_keys(
-                    config('experiments.recommend')
+                    config('experiments.tests.recommend')
                 )
             )
         );
@@ -42,13 +42,15 @@ class SetExperimentTest extends TestCase
         config(
             [
                 'experiments' => [
-                    'recommend' => [
-                        'control' => 'personalize',
-                        'test' => 'alice',
-                    ],
-                    'recommend_2' => [
-                        'control' => 'personalize',
-                        'test' => 'alice',
+                    'tests' => [
+                        'recommend' => [
+                            'control' => 'personalize',
+                            'test' => 'alice',
+                        ],
+                        'recommend_2' => [
+                            'control' => 'personalize',
+                            'test' => 'alice',
+                        ],
                     ],
                 ],
             ]
@@ -70,7 +72,7 @@ class SetExperimentTest extends TestCase
             in_array(
                 $experiment['experiment_recommend'],
                 array_keys(
-                    config('experiments.recommend')
+                    config('experiments.tests.recommend')
                 )
             )
         );
@@ -79,7 +81,7 @@ class SetExperimentTest extends TestCase
             in_array(
                 $experiment['experiment_recommend_2'],
                 array_keys(
-                    config('experiments.recommend_2')
+                    config('experiments.tests.recommend_2')
                 )
             )
         );
@@ -152,7 +154,7 @@ class SetExperimentTest extends TestCase
      */
     public function testPresetExperiments()
     {
-        config(['experiments.recommend_2' => []]);
+        config(['experiments.tests.recommend_2' => []]);
 
         // this ensures control always get chosen
         mt_srand(0);

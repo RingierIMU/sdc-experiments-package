@@ -26,8 +26,7 @@ class ExperimentsServiceProvider extends ServiceProvider
 
     public function register()
     {
-        // do not merge config from base package, this can cause a/b test inheritance from the example config
-        //$this->mergeConfigFrom($this->configPath(), 'experiments');
+        $this->mergeConfigFrom($this->configPath(), 'experiments');
 
         $this->app->singleton('experiments', function ($app) {
             return $app->make(Experiments::class);

@@ -17,7 +17,9 @@ class ExperimentsTest extends TestCase
         $this->assertEquals(
             [
                 'experiments' => [
-                    'recommend' => $assignment,
+                    'tests' => [
+                        'recommend' => $assignment,
+                    ],
                 ],
             ],
             GoogleTagManager::getDataLayer()->toArray()
@@ -58,8 +60,10 @@ class ExperimentsTest extends TestCase
         config(
             [
                 'experiments' => [
-                    'experiment-1' => [],
-                    'experiment-2' => [],
+                    'tests' => [
+                        'experiment-1' => [],
+                        'experiment-2' => [],
+                    ],
                 ],
             ]
         );

@@ -19,9 +19,11 @@ abstract class TestCase extends BaseTestCase
         config(
             [
                 'experiments' => [
-                    'recommend' => [
-                        'control' => 'personalize',
-                        'test' => 'alice',
+                    'tests' => [
+                        'recommend' => [
+                            'control' => 'personalize',
+                            'test' => 'alice',
+                        ],
                     ],
                 ],
             ]
