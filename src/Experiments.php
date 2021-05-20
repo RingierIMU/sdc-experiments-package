@@ -93,7 +93,7 @@ class Experiments
     public function availableExperiments(): array
     {
         return array_keys(
-            config('experiments') ?: []
+            config('experiments.tests') ?: []
         );
     }
 

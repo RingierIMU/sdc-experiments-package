@@ -14,13 +14,25 @@ class ExperimentsTest extends TestCase
 
         SdcExperiments::googleTagManagerSetTrackingVars();
 
+        $assignmentIndex = $assignment === 'control' ? 0 : 1;
+
         $this->assertEquals(
             [
                 'experiments' => [
-                    'tests' => [
-                        'recommend' => $assignment,
-                    ],
+                    'recommend' => $assignment,
                 ],
+                'ga_optimize_exp' => sprintf(
+                    'GOOGLE_OPTIMIZE_EXPERIMENT_ID.%s!GOOGLE_OPTIMIZE_EXPERIMENT_ID_2.%s-%s',
+                    $assignmentIndex,
+                    $assignmentIndex,
+                    $assignmentIndex
+                ),
+                'experiments_running' => sprintf(
+                    'recommend_group.%s!another_group_not_called_recommend.%s-%s',
+                    $assignmentIndex,
+                    $assignmentIndex,
+                    $assignmentIndex
+                ),
             ],
             GoogleTagManager::getDataLayer()->toArray()
         );

@@ -193,7 +193,7 @@ class SetExperimentTest extends TestCase
     }
 
     protected function setExperiments() {
-        foreach (array_keys(config('experiments')) as $experiment) {
+        foreach (array_keys(config('experiments.tests')) as $experiment) {
             SdcExperiments::getOrStartExperiment($experiment);
         }
     }
