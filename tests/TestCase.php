@@ -19,9 +19,26 @@ abstract class TestCase extends BaseTestCase
         config(
             [
                 'experiments' => [
-                    'recommend' => [
-                        'control' => 'personalize',
-                        'test' => 'alice',
+                    'tests' => [
+                        'recommend' => [
+                            'control' => 'personalize',
+                            'test' => 'alice',
+                        ],
+                    ],
+                    'groups' => [
+                        'recommend_group' => [
+                            'id' => 'GOOGLE_OPTIMIZE_EXPERIMENT_ID',
+                            'variations' => [
+                                'recommend',
+                            ],
+                        ],
+                        'another_group_not_called_recommend' => [
+                            'id' => 'GOOGLE_OPTIMIZE_EXPERIMENT_ID_2',
+                            'variations' => [
+                                'recommend',
+                                'recommend', // repeat the same one here for
+                            ],
+                        ],
                     ],
                 ],
             ]

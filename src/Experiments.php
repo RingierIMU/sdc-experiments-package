@@ -5,7 +5,7 @@ namespace Ringierimu\Experiments;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
-use Spatie\GoogleTagManager\GoogleTagManagerFacade;
+use Spatie\GoogleTagManager\GoogleTagManagerFacade as GoogleTagManager;
 
 class Experiments
 {
@@ -93,7 +93,7 @@ class Experiments
     public function availableExperiments(): array
     {
         return array_keys(
-            config('experiments') ?: []
+            config('experiments.tests') ?: []
         );
     }
 
@@ -176,7 +176,86 @@ class Experiments
 
     public function googleTagManagerSetTrackingVars()
     {
-        GoogleTagManagerFacade::set(
+        $experiments = collect(config('experiments.groups') ?: [])
+            ->map(
+                function ($experiment, $experimentName) {
+                    if (!$experiment['id']) {
+                        return null;
+                    }
+
+                    $hasVariation = false;
+                    foreach ($experiment['variations'] as $variation) {
+                        if (!is_null($this->getExperiment($variation))) {
+                            $hasVariation = true;
+                        }
+                    }
+                    if (!$hasVariation) {
+                        return null;
+                    }
+
+                    $variations = [];
+                    foreach ($experiment['variations'] as $variation) {
+                        switch ($this->getOrStartExperiment($variation)) {
+                            case 'test':
+                                $variations[] = '1';
+                                break;
+                            case 'internal':
+                                $variations[] = '2';
+                                break;
+                            case 'control':
+                            case null:
+                            default:
+                                $variations[] = '0';
+                                break;
+                        }
+                    }
+
+                    return [
+                        'id' => $experiment['id'],
+                        'name' => $experimentName,
+                        'variations' => $variations,
+                    ];
+
+                    return sprintf(
+                        '%s.%s',
+                        $experiment['id'],
+                        implode('-', $variations)
+                    );
+                }
+            )
+            ->filter();
+
+        GoogleTagManager::set(
+            'ga_optimize_exp',
+            $experiments
+                ->map(
+                    function ($experiment) {
+                        return sprintf(
+                            '%s.%s',
+                            $experiment['id'],
+                            implode('-', $experiment['variations'])
+                        );
+                    }
+                )
+                ->implode('!')
+        );
+
+        GoogleTagManager::set(
+            'experiments_running',
+            $experiments
+                ->map(
+                    function ($experiment) {
+                        return sprintf(
+                            '%s.%s',
+                            $experiment['name'],
+                            implode('-', $experiment['variations'])
+                        );
+                    }
+                )
+                ->implode('!')
+        );
+
+        GoogleTagManager::set(
             'experiments',
             $this->userExperiments()
         );
