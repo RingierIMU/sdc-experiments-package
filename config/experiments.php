@@ -10,6 +10,10 @@ return [
         //'experiment_2' => [],
         //'experiment_3' => [],
     ],
+    'weighting' => [
+        // control percentage
+        //'experiment_1' => 20,
+    ],
     'groups' => [
         // example format
         //'experiment_collection_name' => [
