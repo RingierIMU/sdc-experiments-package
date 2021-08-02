@@ -114,7 +114,7 @@ class Experiments
 
         $assignment = $this->getExperiment($experiment);
         if (is_null($assignment)) {
-            $assignment = $this->getRandomAssignment();
+            $assignment = $this->getRandomAssignment($experiment);
 
             $this->setExperimentAssignment($experiment, $assignment);
         }
@@ -137,13 +137,18 @@ class Experiments
     }
 
     /**
+     * @param string $experiment
+     *
      * @return string
      */
-    protected function getRandomAssignment(): string
-    {
-        return mt_rand(0, 1)
-            ? 'test'
-            : 'control';
+    protected function getRandomAssignment(
+        string $experiment
+    ): string {
+        $controlWeighting = config('experiments.weighting.' . $experiment, 50);
+
+        return mt_rand(1, 100) <= $controlWeighting
+            ? 'control'
+            : 'test';
     }
 
     /**
