@@ -1,5 +1,0 @@
-{
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["local>RingierIMU/renovate-config"],
-  "reviewers": ["lucidlogic", "rklugman", "erhardt-ringiersa"]
-}
