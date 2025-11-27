@@ -13,6 +13,8 @@ jobs:
       matrix:
         php: [8.2, 8.3]
 
+    name: PHP${{ matrix.php }}
+
     steps:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -25,4 +27,4 @@ jobs:
         composer install --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
     - name: Run Tests
-      run: phpunit --coverage-text
+      run: vendor/bin/phpunit
